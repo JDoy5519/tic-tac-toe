@@ -46,8 +46,9 @@ console.log(createTwoPlayers("JD", "DJ"));
 
 //factory function to alter gameboard using symbol
 function placeSymbol(column, row, symbol, grid) {
-    grid[column][row] = symbol;
-    return grid;
+    const newGrid = grid.map(row => [...row]);
+    newGrid[column][row] = symbol;
+    return newGrid;
 }
 
 //function  to declare the winner
@@ -106,7 +107,20 @@ function declareWinner(grid) {
         grid[2][2] === 'O')
         {
         console.log("You are the winner!");
-    } else {
+    } else if (
+        grid[0][0] === 'O' || grid[0][0] === 'X' &&
+        grid[1][0] === 'O' || grid[1][0] === 'X' &&
+        grid[2][0] === 'O' || grid[2][0] === 'X' &&
+        grid[0][1] === 'O' || grid[0][1] === 'X' &&
+        grid[0][2] === 'O' || grid[0][2] === 'X' &&
+        grid[1][1] === 'O' || grid[1][1] === 'X' &&
+        grid[2][1] === 'O' || grid[2][1] === 'X' &&
+        grid[1][2] === 'O' || grid[1][2] === 'X' &&
+        grid[2][2] === 'O' || grid[2][2] === 'X' 
+    ) {
+
+    }
+    else {
         console.log('Play your next move!')
     }
 };
@@ -139,7 +153,7 @@ function playGame() {
     const fourthRound = placeSymbol(0,1,secondPlayer.symbol, thirdRound);
     console.log(fourthRound);
     declareWinner(fourthRound);
-    const fifthRound = placeSymbol(2,0,firstPlayer.symbol,secondRound);
+    const fifthRound = placeSymbol(2,0,firstPlayer.symbol,fourthRound);
     console.log(fifthRound);
     declareWinner(fifthRound);
 }
