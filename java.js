@@ -6,17 +6,18 @@ function getRandomInt(max) {
 
 //factory function to create the Gameboard for tic tac toe
 const Gameboard = function () {
-    let grid = [
+    const grid = [
         [0, 0, 0],
         [0, 0, 0],
         [0, 0, 0]
     ];
-    let gameboard = {grid: grid}
-    return console.log(gameboard);
+    return grid;
 }
 
-Gameboard();
+console.log(Gameboard());
 
+
+//factory function to create the User for tic tac toe
 const createUser = function (name) {
     const username = name;
     let symbol = getRandomInt(2);
@@ -35,3 +36,15 @@ const createUser = function (name) {
 }
 
 console.log(createUser("JD"));
+
+//factory function to create an assigning of noughts and crosess
+
+const placeSymbol = function(column, row) {
+    column = 1;
+    row = 1;
+    const grid = Gameboard();
+    grid[column][row] = "cats";
+    console.log(grid);
+}
+
+placeSymbol();
