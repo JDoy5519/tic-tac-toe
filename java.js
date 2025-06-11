@@ -50,15 +50,6 @@ function placeSymbol(column, row, symbol, grid) {
     return grid;
 }
 
-const initialGrid = Gameboard();
-const firstRound = placeSymbol(0,0,"X",initialGrid);
-const secondRound = placeSymbol(1,0,"X",firstRound);
-const thirdRound = placeSymbol(2,0,"X",secondRound);
-
-console.log(firstRound);
-console.log(secondRound);
-console.log(thirdRound);
-
 //function  to declare the winner
 function declareWinner(grid) {
     if (
@@ -88,11 +79,69 @@ function declareWinner(grid) {
         grid[2][2] === 'X' 
     ) {
         console.log("You are the winner!");
+    } else  if (
+        grid[0][0] === 'O' &&
+        grid[1][1] === 'O' &&
+        grid[2][2] === 'O' || 
+        grid[2][2] === 'O' &&
+        grid[1][1] === 'O' &&
+        grid[0][2] === 'O' ||
+        grid[0][0] === 'O' &&
+        grid[0][1] === 'O' &&
+        grid[0][2] === 'O' ||
+        grid[1][0] === 'O' &&
+        grid[1][1] === 'O' &&
+        grid[1][2] === 'O' ||
+        grid[2][0] === 'O' &&
+        grid[2][1] === 'O' &&
+        grid[2][2] === 'O' ||
+        grid[0][0] === 'O' &&
+        grid[1][0] === 'O' &&
+        grid[2][0] === 'O' ||
+        grid[0][1] === 'O' &&
+        grid[1][1] === 'O' &&
+        grid[2][1] === 'O' ||
+        grid[0][2] === 'O' &&
+        grid[1][2] === 'O' &&
+        grid[2][2] === 'O')
+        {
+        console.log("You are the winner!");
     } else {
-        console.log("Play your next move!");
+        console.log('Play your next move!')
     }
 };
 
-declareWinner(thirdRound);
-
 //function to play the game
+
+function playGame() {
+    let player1 = "Josh";
+    let player2 = "Jess";
+    let playerArray = createTwoPlayers(player1, player2);
+    let board = Gameboard();
+    let firstPlayer = [];
+    let secondPlayer = [];
+    if (playerArray.player1array.order === 1) {
+        firstPlayer = playerArray.player1array
+        secondPlayer = playerArray.player2array
+    } else {
+        secondPlayer = playerArray.player1array
+        firstPlayer = playerArray.player2array
+    }
+    const firstRound = placeSymbol(0,0,firstPlayer.symbol,board);
+    console.log(firstRound);
+    declareWinner(firstRound);
+    const secondRound = placeSymbol(1,1,secondPlayer.symbol,firstRound);
+    console.log(secondRound);
+    declareWinner(secondRound);
+    const thirdRound = placeSymbol(1,0,firstPlayer.symbol,secondRound);
+    console.log(thirdRound);
+    declareWinner(thirdRound);
+    const fourthRound = placeSymbol(0,1,secondPlayer.symbol, thirdRound);
+    console.log(fourthRound);
+    declareWinner(fourthRound);
+    const fifthRound = placeSymbol(2,0,firstPlayer.symbol,secondRound);
+    console.log(fifthRound);
+    declareWinner(fifthRound);
+}
+
+playGame();
