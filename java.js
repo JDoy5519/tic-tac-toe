@@ -3,6 +3,11 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+//function to prevent default settings on form
+const form = document.getElementById("myForm");
+function handleForm(event) { event.preventDefault(); } 
+form.addEventListener('submit', handleForm);
+
 
 //factory function to create the Gameboard for tic tac toe
 function Gameboard() {
@@ -11,16 +16,68 @@ function Gameboard() {
         [0, 0, 0],
         [0, 0, 0]
     ];
+
     return grid;
 }
 
-console.log(Gameboard());
+//function to generate the gameboard
+function generateDivs() {
+    const size = 3;
+    const containerDiv = document.createElement("div");
+    containerDiv.classList.add("grid-container");
+    document.body.appendChild(containerDiv);
+
+    let allCells = [];
+
+    for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+            const cell = document.createElement("div");
+            cell.classList.add("grid-cell");
+            cell.setAttribute("data-row", row);
+            cell.setAttribute("data-col", col);
+            cell.setAttribute("id", `cell-${row}-${col}`);
+            containerDiv.appendChild(cell);
+            allCells.push(cell);
+        }
+    }
+
+    return allCells;
+}
+
+//function to map 2D array onto the grid
+
+function boardMap(cells, board) {
+    cells.forEach(cell => {
+        const row = parseInt(cell.getAttribute("data-row"));
+        const col = parseInt(cell.getAttribute("data-col"));
+        cell.innerHTML = board[row][col];
+    });
+}
+
+//function to remove divs to make space to append the player names
+function removeDivs() {
+    const playerOneInput = document.getElementById("player-one-input");
+    const playerOneLabel = document.getElementById("player-one-label");
+    const playerTwoInput = document.getElementById("player-two-input");
+    const playerTwoLabel = document.getElementById("player-two-label");
+    const submitButton = document.getElementById("mySubmit");
+    playerOneInput.remove();
+    playerOneLabel.remove();
+    playerTwoInput.remove();
+    playerTwoLabel.remove();
+    submitButton.remove();
+}
 
 
-//factory function to create the User for tic tac toe
-function createTwoPlayers(name1,name2) {
-    const username1 = name1;
-    const username2 = name2;
+
+
+
+//submit user input function
+function submitUserInput() {
+    let playerOne = document.getElementById("player-one-input").value;
+    let playerTwo = document.getElementById("player-two-input").value;
+    const username1 = playerOne;
+    const username2 = playerTwo;
     let assignSymbol = getRandomInt(2);
     if (assignSymbol === 0 ) {
         player1symbol = "O";
@@ -39,10 +96,27 @@ function createTwoPlayers(name1,name2) {
     }
     const player1array = {username: username1, symbol: player1symbol, order: player1order};
     const player2array = {username: username2, symbol: player2symbol, order: player2order};
+    console.log(player1array);
+    console.log(player2array);
+    if (player1array.order === 1) {
+        const newDiv = document.createElement('div');
+        newDiv.innerHTML += 
+        `<div>Player1: ${player1array.username} it is your turn! You are: ${player1array.symbol}</div>
+        <div>Player2: ${player2array.username} You are: ${player2array.symbol}</div>`
+        document.body.appendChild(newDiv);
+    } else {
+        const newDiv = document.createElement('div');
+        newDiv.innerHTML += 
+        `<div>Player1: ${player1array.username} You are: ${player1array.symbol}</div>
+        <div>Player2: ${player2array.username} it is your turn! You are: ${player2array.symbol}</div>`
+        document.body.appendChild(newDiv);
+    }
+    removeDivs();
+    const board = Gameboard();
+    const cells = generateDivs();
+    boardMap(cells, board);
     return {player1array, player2array};
 }
-
-console.log(createTwoPlayers("JD", "DJ"));
 
 //factory function to alter gameboard using symbol
 function placeSymbol(column, row, symbol, grid) {

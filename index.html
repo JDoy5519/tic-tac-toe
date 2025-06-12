@@ -8,7 +8,19 @@
     <script src="java.js" defer></script>
 </head>
 <body>
-    
+    <form id="myForm">
+        <div id="player-one-select">
+            <label for="player-one-input" id="player-one-label">Player 1 Name:</label>
+            <input id="player-one-input" type="text">
+        </div>
+        <div id="player-two-select">
+            <label for="player-two-input" id="player-two-label">Player 2 Name:</label>
+            <input id="player-two-input" type="text">
+        </div>
+        <div class="submit">
+            <button id="mySubmit" type="submit" onclick="submitUserInput()">Submit Names</button>
+        </div>
+    </form>
     
 </body>
 </html>
